@@ -43,7 +43,7 @@ import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.model.impl.AssignmentImpl;
 import com.liferay.training.gradebook.model.impl.AssignmentModelImpl;
 import com.liferay.training.gradebook.service.persistence.AssignmentPersistence;
-import com.liferay.training.gradebook.service.persistence.impl.constants.AssignmentPersistenceConstants;
+import com.liferay.training.gradebook.service.persistence.impl.constants.GradebookPersistenceConstants;
 
 import java.io.Serializable;
 
@@ -2599,7 +2599,7 @@ public class AssignmentPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AssignmentPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		target = GradebookPersistenceConstants.SERVICE_CONFIGURATION_FILTER,
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
@@ -2607,7 +2607,7 @@ public class AssignmentPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AssignmentPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = GradebookPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setDataSource(DataSource dataSource) {
@@ -2616,7 +2616,7 @@ public class AssignmentPersistenceImpl
 
 	@Override
 	@Reference(
-		target = AssignmentPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		target = GradebookPersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
 		unbind = "-"
 	)
 	public void setSessionFactory(SessionFactory sessionFactory) {

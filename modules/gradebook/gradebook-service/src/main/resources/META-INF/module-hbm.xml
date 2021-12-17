@@ -3,7 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.training.gradebook.model.Assignment" />
-	<class name="com.liferay.training.gradebook.model.impl.AssignmentImpl" table="Assignment_Assignment">
+	<class name="com.liferay.training.gradebook.model.impl.AssignmentImpl" table="Gradebook_Assignment">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assignmentId" type="long">
 			<generator class="assigned" />
 		</id>
