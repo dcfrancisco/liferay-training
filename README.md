@@ -1,11 +1,6 @@
 # liferay-training
 Liferay 7.3 practice (gradebook)
 
-```
-TypeError: lookups.flatMap is not a function
-dasdjlkjasjd
-jkljlkjaksd
-```
 
 
 ## Folder Structure
@@ -28,3 +23,8 @@ my-project
 └── themes
     └── js themes
 ```
+
+## Placeholder
+
+### fff
+
