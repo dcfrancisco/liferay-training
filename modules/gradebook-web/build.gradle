@@ -1,0 +1,17 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "release.portal.api"
+
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.2"
+	// Clay taglib.
+	compileOnly group: 'com.liferay', name: 'com.liferay.frontend.taglib.clay'
+	// Needed for the Assignments Management Toolbar.
+	compileOnly group: 'com.liferay', name: 'com.liferay.petra.function'
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
+	compileOnly group: "javax.portlet", name: "portlet-api"
+	compileOnly group: "javax.servlet", name: "javax.servlet-api"
+	compileOnly group: "jstl", name: "jstl"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+	// Gradebook service.
+	compileOnly project(":modules:gradebook:gradebook-api")
+}
