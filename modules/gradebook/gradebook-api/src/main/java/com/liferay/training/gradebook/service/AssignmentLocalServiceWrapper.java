@@ -49,6 +49,17 @@ public class AssignmentLocalServiceWrapper
 		return _assignmentLocalService.addAssignment(assignment);
 	}
 
+	@Override
+	public com.liferay.training.gradebook.model.Assignment addAssignment(
+			long groupId, String title, String description,
+			java.util.Date dueDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assignmentLocalService.addAssignment(
+			groupId, title, description, dueDate, serviceContext);
+	}
+
 	/**
 	 * Creates a new assignment with the primary key. Does not add the assignment to the database.
 	 *
