@@ -51,9 +51,11 @@ public class EditAssignmentMVCActionCommand extends BaseMVCActionCommand {
 			_assignmentService.updateAssignment(assignmentId, title, description, dueDate, serviceContext);
 			sendRedirect(actionRequest, actionResponse);
 		} catch (AssignmentValidationException ave) {
+
 			ave.printStackTrace();
 			actionResponse.setRenderParameter("mvcRenderCommandName", MVCCommandNames.EDIT_ASSIGNMENT);
 		} catch (PortalException pe) {
+
 			pe.printStackTrace();
 			actionResponse.setRenderParameter("mvcRenderCommandName", MVCCommandNames.EDIT_ASSIGNMENT);
 		}
