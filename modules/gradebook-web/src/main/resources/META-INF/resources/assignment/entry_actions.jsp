@@ -22,6 +22,8 @@
 		<portlet:param name="assignmentId" value="${assignment.assignmentId}" />
 	</portlet:renderURL>
 
+	<liferay-ui:icon message="edit" url="${editAssignmentURL}" />
+	
 	<%-- Delete action. --%>
 	<portlet:actionURL name="<%=MVCCommandNames.DELETE_ASSIGNMENT%>"
 		var="deleteAssignmentURL">
