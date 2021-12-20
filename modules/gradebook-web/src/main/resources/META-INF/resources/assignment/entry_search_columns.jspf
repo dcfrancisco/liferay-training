@@ -1,12 +1,12 @@
 <%-- Generate assignment view  URL. --%>
-
+ 
  <portlet:renderURL var="viewAssignmentURL">
      <portlet:param name="mvcRenderCommandName" value="<%=MVCCommandNames.VIEW_ASSIGNMENT %>" />
      <portlet:param name="redirect" value="${currentURL}" />
      <portlet:param name="assignmentId" value="${entry.assignmentId}" />
  </portlet:renderURL>
-
- <c:choose>
+ 
+  <c:choose>
 
      <%-- Descriptive (list) view --%>
 
