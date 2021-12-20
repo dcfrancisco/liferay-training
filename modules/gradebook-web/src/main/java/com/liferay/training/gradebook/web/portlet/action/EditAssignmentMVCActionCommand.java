@@ -22,14 +22,8 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(
-	immediate = true, 
-	property = { 
-		"javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
-		"mvc.command.name=" + MVCCommandNames.EDIT_ASSIGNMENT 
-	}, 
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, property = { "javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
+		"mvc.command.name=" + MVCCommandNames.EDIT_ASSIGNMENT }, service = MVCActionCommand.class)
 public class EditAssignmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
@@ -44,7 +38,7 @@ public class EditAssignmentMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description", StringPool.BLANK);
 
 		Date dueDate = ParamUtil.getDate(actionRequest, "dueDate",
-				DateFormatFactoryUtil.getDate(actionRequest.getLocale()));
+				DateFormatFactoryUtil.getDate(serviceContext.getLocale()));
 
 		try {
 			// Call the service to update the assignment

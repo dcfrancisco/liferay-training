@@ -42,7 +42,7 @@ public class AddAssignmentMVCActionCommand extends BaseMVCActionCommand {
 		String title = ParamUtil.getString(actionRequest, "title", StringPool.BLANK);
 		String description = ParamUtil.getString(actionRequest, "description", StringPool.BLANK);
 		Date dueDate = ParamUtil.getDate(actionRequest, "dueDate",
-				DateFormatFactoryUtil.getDate(actionRequest.getLocale()));
+				DateFormatFactoryUtil.getDate(themeDisplay.getLocale()));
 
 		try {
 			// Call the service to add a new assignment.
