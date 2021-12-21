@@ -1,5 +1,5 @@
 # liferay-training
-Liferay 7.3 practice (gradebook)
+Liferay 7.3 practice (gradebook exercise)
 
 
 
@@ -15,16 +15,41 @@ my-project
 │ └── uat
 ├── modules
 │ ├── apis
+│ │   - Gradebook-api 
 │ ├── services
+│ │   - Gradebook-service 
 │ ├── java widgets
+│ │   - Gradebook portlet
 │ ├── js widgets
+│ │   - Angular Weather App
 │ ├── java ee widgets (spring mvc, jsf, etc)
 │ └── java themes
 └── themes
     └── js themes
 ```
 
-## Placeholder
+## Setup Environment
 
-### fff
+
+## Building the projects 
+### Service Builder  
+
+```
+
+
+```
+#### Widget
+
+```
+cd 
+blade gw build
+```
+
+### JS Widgets
+
+```
+npm run build
+```
+
+
 
