@@ -22,8 +22,14 @@ import javax.portlet.ActionResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(immediate = true, property = { "javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
-		"mvc.command.name=" + MVCCommandNames.EDIT_ASSIGNMENT }, service = MVCActionCommand.class)
+@Component(
+	immediate = true, 
+	property = { 
+		"javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
+		"mvc.command.name=" + MVCCommandNames.EDIT_ASSIGNMENT 
+	}, 
+	service = MVCActionCommand.class
+)
 public class EditAssignmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override

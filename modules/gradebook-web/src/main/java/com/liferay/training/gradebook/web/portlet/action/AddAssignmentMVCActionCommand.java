@@ -29,8 +29,14 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author liferay
  */
-@Component(immediate = true, property = { "javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
-		"mvc.command.name=" + MVCCommandNames.ADD_ASSIGNMENT }, service = MVCActionCommand.class)
+@Component(
+	immediate = true, 
+	property = { 
+		"javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK,
+		"mvc.command.name=" + MVCCommandNames.ADD_ASSIGNMENT 
+	}, 
+	service = MVCActionCommand.class
+)
 public class AddAssignmentMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override

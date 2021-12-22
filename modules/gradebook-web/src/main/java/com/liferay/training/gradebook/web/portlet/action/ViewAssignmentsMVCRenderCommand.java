@@ -30,8 +30,14 @@ import org.osgi.service.component.annotations.Reference;
  * 
  * @author liferay
  */
-@Component(immediate = true, property = { "javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK, "mvc.command.name=/",
-		"mvc.command.name=" + MVCCommandNames.VIEW_ASSIGNMENTS }, service = MVCRenderCommand.class)
+@Component(
+	immediate = true, 
+	property = { 
+		"javax.portlet.name=" + GradebookPortletKeys.GRADEBOOK, "mvc.command.name=/",
+		"mvc.command.name=" + MVCCommandNames.VIEW_ASSIGNMENTS 
+	}, 
+	service = MVCRenderCommand.class
+)
 public class ViewAssignmentsMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
