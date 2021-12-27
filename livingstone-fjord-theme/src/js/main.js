@@ -1,8 +1,22 @@
-AUI().ready(
-	'liferay-sign-in-modal',
-	function(A) {
-		// Insert snippet 01-variables-and-sign-in here
+AUI().ready("liferay-sign-in-modal", function (A) {
+  var BODY = A.getBody();
 
-		// Insert snippet 02-close-nav-click here
-	}
-);
+  var signIn = A.one("#sign-in");
+
+  if (signIn && signIn.getData("redirect") !== "true") {
+    signIn.plug(Liferay.SignInModal);
+  }
+
+  var fullScreenToggleIcon = A.one(
+    ".full-screen-navigation #banner .navbar-toggler"
+  );
+
+  if (fullScreenToggleIcon) {
+    fullScreenToggleIcon.on("click", function (event) {
+      BODY.toggleClass(
+        "main-nav-opened",
+        event.currentTarget.hasClass("collapsed")
+      );
+    });
+  }
+});
