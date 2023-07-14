@@ -5,27 +5,23 @@ Liferay 7.3 practice (gradebook exercise)
 
 ## Folder Structure
 ```
-my-project
-├── configs
-│ ├── common
-│ ├── dev
-│ ├── docker
-│ ├── local
-│ ├── prod
-│ └── uat
-├── modules
-│ ├── apis
-│ │   - Gradebook-api 
-│ ├── services
-│ │   - Gradebook-service 
-│ ├── java widgets
-│ │   - Gradebook portlet
-│ ├── js widgets
-│ │   - Angular Weather App
-│ ├── java ee widgets (spring mvc, jsf, etc)
-│ └── java themes
-└── themes
-    └── js themes
+liferay-training
+    ├── configs
+    │   ├── common
+    │   ├── dev
+    │   ├── docker
+    │   ├── local
+    │   ├── prod
+    │   └── uat
+    ├── modules
+    │   ├── angular-routing-demo-portlet
+    │   ├── angular-weather-app
+    │   ├── gradebook
+    │   │   ├── Gradebook-api 
+    │   │   └── Gradebook-service 
+    │   └── gradebook-web
+    └── themes
+        └── livingstone-fjord-theme
 ```
 
 ## Setup Environment
