@@ -8,11 +8,14 @@
 **/build
 **/build_gradle
 **/node_modules
+**/node_modules_cache
 **/test-coverage
 **/tmp
 **/.web_bundle_build
 .gradle
 .idea
+.DS_Store
+service.properties
 /bundles
 /gradle-*.properties
 /plugins-sdk/**/classes
