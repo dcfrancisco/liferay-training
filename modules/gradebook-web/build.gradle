@@ -1,7 +1,7 @@
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.2"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.2"
 	// Clay taglib.
 	compileOnly group: 'com.liferay', name: 'com.liferay.frontend.taglib.clay'
 	// Needed for the Assignments Management Toolbar.
@@ -18,6 +18,6 @@ dependencies {
 
 tasks.withType(JavaCompile) {
 // Generated classes using Jodd library are unable to be read when compiled against JDK
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 }

@@ -38,8 +38,18 @@ https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
 ```
 
 ### Install Nvm
-```
+
+__Windows__
+
+* [Windows](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
+* Linux
+```agsl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+```
+* Mac
+```
+brew install nvm
+
 ```
 __Install node 16__
 ```

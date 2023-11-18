@@ -1,5 +1,6 @@
 dependencies {
 	compileOnly project(":modules:gradebook:gradebook-api")
+	implementation group: 'com.liferay', name: 'com.liferay.portal.aop.api', version: '3.0.5'
 
 	compileOnly group: "com.liferay.portal", name: "release.portal.api"
 }
@@ -11,7 +12,7 @@ buildService {
 group = "com.liferay.training.gradebook"
 
 tasks.withType(JavaCompile) {
-	sourceCompatibility = JavaVersion.VERSION_11
+	sourceCompatibility = JavaVersion.VERSION_1_8
 
-	targetCompatibility = JavaVersion.VERSION_11
+	targetCompatibility = JavaVersion.VERSION_1_8
 }
