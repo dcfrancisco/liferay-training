@@ -1,0 +1,7 @@
+Bundle-Name: owner-web
+Bundle-SymbolicName: com.liferay.training.owner
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.training.owner.constants
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
