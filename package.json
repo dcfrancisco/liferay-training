@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "modules/angular-weather-app",
+            "modules/angular-routing-demo-portlet",
+            "themes/livingstone-fjord-theme"
+        ]
+    }
+}

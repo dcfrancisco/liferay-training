@@ -4,6 +4,7 @@ Complete documentation for Liferay Workspace can be found
 [here](https://learn.liferay.com/dxp/7.x/en/developing-applications/tooling/liferay-workspace.html).
 
 ## Folder Structure
+
 ```
 my-project
 ├── configs
@@ -25,12 +26,15 @@ my-project
 ```
 
 ## Running Liferay DXP locally
+
 ```
 my-project $ blade gw initBundle
 my-project $ blade gw deploy
 my-project $ blade server run
 ```
+
 ## Running Liferay DXP in Docker
+
 ```
 my-project $ blade gw createDockerContainer
 my-project $ blade gw startDockerContainer
@@ -39,16 +43,26 @@ my-project $ blade gw startDockerContainer
 ## Creating a Liferay DXP distribution
 
 ### Creating a tar
+
 ```
 my-project $ blade gw distBundleTar
 ```
 
 ### Creating a zip
+
 ```
 my-project $ blade gw distBundleZip
 ```
 
+### Creating multiple bundles
+
+```
+my-project $ blade gw distBundleTarAll
+my-project $ blade gw distBundleZipAll
+```
+
 ### Creating a docker image
+
 ```
 my-project $ blade gw buildDockerImage
 ```
@@ -56,21 +70,25 @@ my-project $ blade gw buildDockerImage
 ## Create a Liferay DXP module
 
 ### Creating a new service
+
 ```
 my-project $ blade create -t service-builder my-service
 ```
 
 ### Creating a javascript theme
+
 ```
 my-project $ blade create -t js-theme my-theme
 ```
 
 ### Creating a Java Widget
+
 ```
 my-project $ blade create -t mvc-portlet "my-java-widget"
 ```
 
 ### Create a JS Widget
+
 ```
 my-project $ blade create -t js-widget "my-js-widget"
 ```
@@ -83,7 +101,12 @@ Set the following in `gradle.properties` to change the default settings.
 Set the `liferay.workspace.product` to set the `app.server.tomcat.version`,
 `liferay.workspace.bundle.url`, `liferay.workspace.docker.image.liferay`, and
 `liferay.workspace.target.platform.version` that matches your Liferay Product
-Version. To override each of these settings, set them individually.
+Version. To override each of these settings, set them individually. The value
+may either be `null`, or one of the `releaseKey` values found in
+https://releases.liferay.com/releases.json.
+
+This file is refreshed once every 30 days. To force workspace to check for new
+releases, use the system property `-Dliferay.workspace.refresh.liferay.releases`.
 
 #### app.server.tomcat.version
 Set this property to override the default setting provided by
@@ -135,6 +158,35 @@ You can organize environment settings and generate an environment installation
 with those settings. There are five environments: common, dev, docker, local,
 prod, and uat. The default value is `local`.
 
+#### liferay.workspace.bundle.dist.include.metadata
+Set this to true to append metadata for the current environment settings and
+timestamp. The default value is `false`.
+
+#### liferay.workspace.dir.excludes.globs
+Set a list of glob patterns to exclude from the build lifecycle. All glob
+patterns start relative to the workspace root directory.
+
+Examples:
+
+```
+liferay.workspace.dir.excludes.globs=\
+	**/some-wip-project,\
+	dependencies/**,\
+	modules/**/*-test
+```
+
+#### liferay.workspace.docker.local.registry.address
+Set this to the host and port of the local Docker registry. This will enable the user to interact with a Docker registry other than DockerHub (e.g. myregistryaddress.org:5000).
+
+#### liferay.workspace.docker.pull.policy
+Set this to false to pull the user's local Docker cache first. The default value is true.
+
+#### liferay.workspace.docker.username
+Set this property to the registered user name on DockerHub to avoid conflicts with DockerHub.
+
+#### liferay.workspace.docker.user.access.token
+See https://docs.docker.com/docker-hub/access-tokens on how to generate a Docker access token.
+
 #### liferay.workspace.ext.dir
 Set the folder that contains all Ext OSGi modules and Ext plugins. The default
 value is `ext`.
@@ -155,9 +207,15 @@ subdirectories. The default value is `modules`.
 Set this to true to compile the JSP files in OSGi modules and have them added
 to the distributable Zip/Tar. The default value is `false`.
 
+#### liferay.workspace.node.lts.codename
+Set this property to a Node.js LTS release codename to automatically use the latest Node version and NPM version for that LTS release. See https://github.com/nodejs/Release/blob/main/CODENAMES.md for the list of valid codenames.
+
+This file is refreshed once every 30 days. To force workspace to check for new
+releases, use the system property `-Dliferay.workspace.refresh.node.releases`.
+
 #### liferay.workspace.node.package.manager
-Set this property to `yarn` to build Node.js-style projects using Yarn. The
-default value is `npm`.
+Set this property to `npm` to build Node.js-style projects using NPM. The
+default value is `yarn`.
 
 #### liferay.workspace.plugins.sdk.dir
 Set the folder that contains the Plugins SDK environment. The default value is
@@ -189,11 +247,21 @@ slow down your IDE's project synchronization.
 ## Build Customizations via `build.gradle`
 
 ### Overwrite specific dependency in one project
-Set `force = true` to overwrite the version of a specific dependency. See
+Set `configuration.resolutionStrategy.force 'groupId:artifactId:version'` to
+overwrite the version of a specific dependency. See
 `https://docs.gradle.org/current/userguide/dependency_downgrade_and_exclude.html#forced_dependencies_vs_strict_dependencies`.
+
+```
+configurations {
+    compileClasspath {
+        resolutionStrategy.force 'groupId:artifactId:version`
+    }
+}
+```
 
 ### Overwrite dependency in multiple projects
 Set the following to overwrite the version of a dependency for the project.
+
 ```
 subprojects {
 	configurations.all {

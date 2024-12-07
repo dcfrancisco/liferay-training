@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.training.gradebook.service.persistence.impl;
@@ -32,8 +23,11 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,6 +37,7 @@ import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.model.impl.AssignmentImpl;
 import com.liferay.training.gradebook.model.impl.AssignmentModelImpl;
 import com.liferay.training.gradebook.service.persistence.AssignmentPersistence;
+import com.liferay.training.gradebook.service.persistence.AssignmentUtil;
 import com.liferay.training.gradebook.service.persistence.impl.constants.GradebookPersistenceConstants;
 
 import java.io.Serializable;
@@ -1972,6 +1967,8 @@ public class AssignmentPersistenceImpl
 			assignment);
 	}
 
+	private int _valueObjectFinderCacheListThreshold;
+
 	/**
 	 * Caches the assignments in the entity cache if it is enabled.
 	 *
@@ -1979,6 +1976,13 @@ public class AssignmentPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(List<Assignment> assignments) {
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (assignments.size() > _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
 		for (Assignment assignment : assignments) {
 			if (entityCache.getResult(
 					AssignmentImpl.class, assignment.getPrimaryKey()) == null) {
@@ -2506,6 +2510,9 @@ public class AssignmentPersistenceImpl
 			MapUtil.singletonDictionary(
 				"model.class.name", Assignment.class.getName()));
 
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
 		_finderPathWithPaginationFindAll = _createFinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
 			new String[0], true);
@@ -2582,10 +2589,14 @@ public class AssignmentPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		AssignmentUtil.setPersistence(this);
 	}
 
 	@Deactivate
 	public void deactivate() {
+		AssignmentUtil.setPersistence(null);
+
 		entityCache.removeCache(AssignmentImpl.class.getName());
 
 		_argumentsResolverServiceRegistration.unregister();
@@ -2691,7 +2702,7 @@ public class AssignmentPersistenceImpl
 
 			if ((columnNames == null) || (columnNames.length == 0)) {
 				if (baseModel.isNew()) {
-					return FINDER_ARGS_EMPTY;
+					return new Object[0];
 				}
 
 				return null;
@@ -2718,8 +2729,9 @@ public class AssignmentPersistenceImpl
 				}
 
 				if (finderPath.isBaseModelResult() &&
-					(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
-						finderPath.getCacheName())) {
+					(AssignmentPersistenceImpl.
+						FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION ==
+							finderPath.getCacheName())) {
 
 					finderPathColumnBitmask |= _ORDER_BY_COLUMNS_BITMASK;
 				}

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.training.gradebook.model.impl;
@@ -30,15 +21,16 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.model.AssignmentModel;
 import com.liferay.training.gradebook.model.AssignmentSoap;
 
 import java.io.Serializable;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 
+import java.sql.Blob;
 import java.sql.Types;
 
 import java.util.ArrayList;
@@ -292,89 +284,67 @@ public class AssignmentModelImpl
 		return _attributeSetterBiConsumers;
 	}
 
-	private static Function<InvocationHandler, Assignment>
-		_getProxyProviderFunction() {
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			Assignment.class.getClassLoader(), Assignment.class,
-			ModelWrapper.class);
-
-		try {
-			Constructor<Assignment> constructor =
-				(Constructor<Assignment>)proxyClass.getConstructor(
-					InvocationHandler.class);
-
-			return invocationHandler -> {
-				try {
-					return constructor.newInstance(invocationHandler);
-				}
-				catch (ReflectiveOperationException
-							reflectiveOperationException) {
-
-					throw new InternalError(reflectiveOperationException);
-				}
-			};
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			throw new InternalError(noSuchMethodException);
-		}
-	}
-
 	private static final Map<String, Function<Assignment, Object>>
 		_attributeGetterFunctions;
-	private static final Map<String, BiConsumer<Assignment, Object>>
-		_attributeSetterBiConsumers;
 
 	static {
 		Map<String, Function<Assignment, Object>> attributeGetterFunctions =
 			new LinkedHashMap<String, Function<Assignment, Object>>();
-		Map<String, BiConsumer<Assignment, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Assignment, ?>>();
 
 		attributeGetterFunctions.put("uuid", Assignment::getUuid);
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Assignment, String>)Assignment::setUuid);
 		attributeGetterFunctions.put(
 			"assignmentId", Assignment::getAssignmentId);
-		attributeSetterBiConsumers.put(
-			"assignmentId",
-			(BiConsumer<Assignment, Long>)Assignment::setAssignmentId);
 		attributeGetterFunctions.put("groupId", Assignment::getGroupId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<Assignment, Long>)Assignment::setGroupId);
 		attributeGetterFunctions.put("companyId", Assignment::getCompanyId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<Assignment, Long>)Assignment::setCompanyId);
 		attributeGetterFunctions.put("userId", Assignment::getUserId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Assignment, Long>)Assignment::setUserId);
 		attributeGetterFunctions.put("userName", Assignment::getUserName);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<Assignment, String>)Assignment::setUserName);
 		attributeGetterFunctions.put("createDate", Assignment::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<Assignment, Date>)Assignment::setCreateDate);
 		attributeGetterFunctions.put(
 			"modifiedDate", Assignment::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Assignment, Date>)Assignment::setModifiedDate);
 		attributeGetterFunctions.put("title", Assignment::getTitle);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<Assignment, String>)Assignment::setTitle);
 		attributeGetterFunctions.put("description", Assignment::getDescription);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<Assignment, String>)Assignment::setDescription);
 		attributeGetterFunctions.put("dueDate", Assignment::getDueDate);
-		attributeSetterBiConsumers.put(
-			"dueDate", (BiConsumer<Assignment, Date>)Assignment::setDueDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
+	}
+
+	private static final Map<String, BiConsumer<Assignment, Object>>
+		_attributeSetterBiConsumers;
+
+	static {
+		Map<String, BiConsumer<Assignment, ?>> attributeSetterBiConsumers =
+			new LinkedHashMap<String, BiConsumer<Assignment, ?>>();
+
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<Assignment, String>)Assignment::setUuid);
+		attributeSetterBiConsumers.put(
+			"assignmentId",
+			(BiConsumer<Assignment, Long>)Assignment::setAssignmentId);
+		attributeSetterBiConsumers.put(
+			"groupId", (BiConsumer<Assignment, Long>)Assignment::setGroupId);
+		attributeSetterBiConsumers.put(
+			"companyId",
+			(BiConsumer<Assignment, Long>)Assignment::setCompanyId);
+		attributeSetterBiConsumers.put(
+			"userId", (BiConsumer<Assignment, Long>)Assignment::setUserId);
+		attributeSetterBiConsumers.put(
+			"userName",
+			(BiConsumer<Assignment, String>)Assignment::setUserName);
+		attributeSetterBiConsumers.put(
+			"createDate",
+			(BiConsumer<Assignment, Date>)Assignment::setCreateDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate",
+			(BiConsumer<Assignment, Date>)Assignment::setModifiedDate);
+		attributeSetterBiConsumers.put(
+			"title", (BiConsumer<Assignment, String>)Assignment::setTitle);
+		attributeSetterBiConsumers.put(
+			"description",
+			(BiConsumer<Assignment, String>)Assignment::setDescription);
+		attributeSetterBiConsumers.put(
+			"dueDate", (BiConsumer<Assignment, Date>)Assignment::setDueDate);
+
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
 	}
@@ -840,7 +810,7 @@ public class AssignmentModelImpl
 			getAttributeGetterFunctions();
 
 		StringBundler sb = new StringBundler(
-			(4 * attributeGetterFunctions.size()) + 2);
+			(5 * attributeGetterFunctions.size()) + 2);
 
 		sb.append("{");
 
@@ -851,9 +821,26 @@ public class AssignmentModelImpl
 			Function<Assignment, Object> attributeGetterFunction =
 				entry.getValue();
 
+			sb.append("\"");
 			sb.append(attributeName);
-			sb.append("=");
-			sb.append(attributeGetterFunction.apply((Assignment)this));
+			sb.append("\": ");
+
+			Object value = attributeGetterFunction.apply((Assignment)this);
+
+			if (value == null) {
+				sb.append("null");
+			}
+			else if (value instanceof Blob || value instanceof Date ||
+					 value instanceof Map || value instanceof String) {
+
+				sb.append(
+					"\"" + StringUtil.replace(value.toString(), "\"", "'") +
+						"\"");
+			}
+			else {
+				sb.append(value);
+			}
+
 			sb.append(", ");
 		}
 
@@ -900,7 +887,9 @@ public class AssignmentModelImpl
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, Assignment>
-			_escapedModelProxyProviderFunction = _getProxyProviderFunction();
+			_escapedModelProxyProviderFunction =
+				ProxyUtil.getProxyProviderFunction(
+					Assignment.class, ModelWrapper.class);
 
 	}
 
