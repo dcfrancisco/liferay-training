@@ -1,0 +1,7 @@
+Bundle-Name: vet-web
+Bundle-SymbolicName: com.liferay.training.vet
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.training.vet.constants
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
