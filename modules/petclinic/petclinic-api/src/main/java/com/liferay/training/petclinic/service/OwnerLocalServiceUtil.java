@@ -222,6 +222,10 @@ public class OwnerLocalServiceUtil {
 		return getService().getOwner(ownerId);
 	}
 
+	public static List<Owner> getOwnerByLastName() {
+		return getService().getOwnerByLastName();
+	}
+
 	/**
 	 * Returns a range of all the owners.
 	 *

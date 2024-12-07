@@ -241,6 +241,13 @@ public class OwnerLocalServiceWrapper
 		return _ownerLocalService.getOwner(ownerId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.training.petclinic.model.Owner>
+		getOwnerByLastName() {
+
+		return _ownerLocalService.getOwnerByLastName();
+	}
+
 	/**
 	 * Returns a range of all the owners.
 	 *

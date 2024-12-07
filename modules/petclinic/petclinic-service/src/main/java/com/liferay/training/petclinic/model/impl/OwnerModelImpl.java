@@ -94,11 +94,17 @@ public class OwnerModelImpl extends BaseModelImpl<Owner> implements OwnerModel {
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long LASTNAME_COLUMN_BITMASK = 1L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OWNERID_COLUMN_BITMASK = 1L;
+	public static final long OWNERID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -336,6 +342,15 @@ public class OwnerModelImpl extends BaseModelImpl<Owner> implements OwnerModel {
 		}
 
 		_lastName = lastName;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalLastName() {
+		return getColumnOriginalValue("lastName");
 	}
 
 	@JSON

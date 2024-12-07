@@ -206,6 +206,9 @@ public interface OwnerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Owner getOwner(long ownerId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Owner> getOwnerByLastName();
+
 	/**
 	 * Returns a range of all the owners.
 	 *

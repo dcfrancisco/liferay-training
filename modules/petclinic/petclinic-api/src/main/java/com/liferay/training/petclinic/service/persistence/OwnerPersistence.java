@@ -32,6 +32,149 @@ public interface OwnerPersistence extends BasePersistence<Owner> {
 	 */
 
 	/**
+	 * Returns all the owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the matching owners
+	 */
+	public java.util.List<Owner> findByLastName(String lastName);
+
+	/**
+	 * Returns a range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @return the range of matching owners
+	 */
+	public java.util.List<Owner> findByLastName(
+		String lastName, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching owners
+	 */
+	public java.util.List<Owner> findByLastName(
+		String lastName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Owner>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching owners
+	 */
+	public java.util.List<Owner> findByLastName(
+		String lastName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Owner>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	public Owner findByLastName_First(
+			String lastName,
+			com.liferay.portal.kernel.util.OrderByComparator<Owner>
+				orderByComparator)
+		throws NoSuchOwnerException;
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	public Owner fetchByLastName_First(
+		String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<Owner>
+			orderByComparator);
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	public Owner findByLastName_Last(
+			String lastName,
+			com.liferay.portal.kernel.util.OrderByComparator<Owner>
+				orderByComparator)
+		throws NoSuchOwnerException;
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	public Owner fetchByLastName_Last(
+		String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<Owner>
+			orderByComparator);
+
+	/**
+	 * Returns the owners before and after the current owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param ownerId the primary key of the current owner
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next owner
+	 * @throws NoSuchOwnerException if a owner with the primary key could not be found
+	 */
+	public Owner[] findByLastName_PrevAndNext(
+			long ownerId, String lastName,
+			com.liferay.portal.kernel.util.OrderByComparator<Owner>
+				orderByComparator)
+		throws NoSuchOwnerException;
+
+	/**
+	 * Removes all the owners where lastName = &#63; from the database.
+	 *
+	 * @param lastName the last name
+	 */
+	public void removeByLastName(String lastName);
+
+	/**
+	 * Returns the number of owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the number of matching owners
+	 */
+	public int countByLastName(String lastName);
+
+	/**
 	 * Caches the owner in the entity cache if it is enabled.
 	 *
 	 * @param owner the owner

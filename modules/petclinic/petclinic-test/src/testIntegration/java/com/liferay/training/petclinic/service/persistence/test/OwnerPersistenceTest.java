@@ -140,6 +140,15 @@ public class OwnerPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLastName() throws Exception {
+		_persistence.countByLastName("");
+
+		_persistence.countByLastName("null");
+
+		_persistence.countByLastName((String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Owner newOwner = addOwner();
 

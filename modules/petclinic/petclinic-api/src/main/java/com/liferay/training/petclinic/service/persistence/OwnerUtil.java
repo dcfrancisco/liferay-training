@@ -107,6 +107,174 @@ public class OwnerUtil {
 	}
 
 	/**
+	 * Returns all the owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the matching owners
+	 */
+	public static List<Owner> findByLastName(String lastName) {
+		return getPersistence().findByLastName(lastName);
+	}
+
+	/**
+	 * Returns a range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @return the range of matching owners
+	 */
+	public static List<Owner> findByLastName(
+		String lastName, int start, int end) {
+
+		return getPersistence().findByLastName(lastName, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching owners
+	 */
+	public static List<Owner> findByLastName(
+		String lastName, int start, int end,
+		OrderByComparator<Owner> orderByComparator) {
+
+		return getPersistence().findByLastName(
+			lastName, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching owners
+	 */
+	public static List<Owner> findByLastName(
+		String lastName, int start, int end,
+		OrderByComparator<Owner> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByLastName(
+			lastName, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	public static Owner findByLastName_First(
+			String lastName, OrderByComparator<Owner> orderByComparator)
+		throws com.liferay.training.petclinic.exception.NoSuchOwnerException {
+
+		return getPersistence().findByLastName_First(
+			lastName, orderByComparator);
+	}
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	public static Owner fetchByLastName_First(
+		String lastName, OrderByComparator<Owner> orderByComparator) {
+
+		return getPersistence().fetchByLastName_First(
+			lastName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	public static Owner findByLastName_Last(
+			String lastName, OrderByComparator<Owner> orderByComparator)
+		throws com.liferay.training.petclinic.exception.NoSuchOwnerException {
+
+		return getPersistence().findByLastName_Last(
+			lastName, orderByComparator);
+	}
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	public static Owner fetchByLastName_Last(
+		String lastName, OrderByComparator<Owner> orderByComparator) {
+
+		return getPersistence().fetchByLastName_Last(
+			lastName, orderByComparator);
+	}
+
+	/**
+	 * Returns the owners before and after the current owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param ownerId the primary key of the current owner
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next owner
+	 * @throws NoSuchOwnerException if a owner with the primary key could not be found
+	 */
+	public static Owner[] findByLastName_PrevAndNext(
+			long ownerId, String lastName,
+			OrderByComparator<Owner> orderByComparator)
+		throws com.liferay.training.petclinic.exception.NoSuchOwnerException {
+
+		return getPersistence().findByLastName_PrevAndNext(
+			ownerId, lastName, orderByComparator);
+	}
+
+	/**
+	 * Removes all the owners where lastName = &#63; from the database.
+	 *
+	 * @param lastName the last name
+	 */
+	public static void removeByLastName(String lastName) {
+		getPersistence().removeByLastName(lastName);
+	}
+
+	/**
+	 * Returns the number of owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the number of matching owners
+	 */
+	public static int countByLastName(String lastName) {
+		return getPersistence().countByLastName(lastName);
+	}
+
+	/**
 	 * Caches the owner in the entity cache if it is enabled.
 	 *
 	 * @param owner the owner

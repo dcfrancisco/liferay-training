@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.training.petclinic.exception.NoSuchOwnerException;
 import com.liferay.training.petclinic.model.Owner;
 import com.liferay.training.petclinic.model.impl.OwnerImpl;
@@ -34,9 +36,12 @@ import com.liferay.training.petclinic.service.persistence.impl.constants.PetClin
 
 import java.io.Serializable;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -80,6 +85,535 @@ public class OwnerPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByLastName;
+	private FinderPath _finderPathWithoutPaginationFindByLastName;
+	private FinderPath _finderPathCountByLastName;
+
+	/**
+	 * Returns all the owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the matching owners
+	 */
+	@Override
+	public List<Owner> findByLastName(String lastName) {
+		return findByLastName(
+			lastName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @return the range of matching owners
+	 */
+	@Override
+	public List<Owner> findByLastName(String lastName, int start, int end) {
+		return findByLastName(lastName, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching owners
+	 */
+	@Override
+	public List<Owner> findByLastName(
+		String lastName, int start, int end,
+		OrderByComparator<Owner> orderByComparator) {
+
+		return findByLastName(lastName, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the owners where lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OwnerModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of owners
+	 * @param end the upper bound of the range of owners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching owners
+	 */
+	@Override
+	public List<Owner> findByLastName(
+		String lastName, int start, int end,
+		OrderByComparator<Owner> orderByComparator, boolean useFinderCache) {
+
+		lastName = Objects.toString(lastName, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByLastName;
+				finderArgs = new Object[] {lastName};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByLastName;
+			finderArgs = new Object[] {lastName, start, end, orderByComparator};
+		}
+
+		List<Owner> list = null;
+
+		if (useFinderCache) {
+			list = (List<Owner>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Owner owner : list) {
+					if (!lastName.equals(owner.getLastName())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_OWNER_WHERE);
+
+			boolean bindLastName = false;
+
+			if (lastName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_3);
+			}
+			else {
+				bindLastName = true;
+
+				sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(OwnerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindLastName) {
+					queryPos.add(lastName);
+				}
+
+				list = (List<Owner>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	@Override
+	public Owner findByLastName_First(
+			String lastName, OrderByComparator<Owner> orderByComparator)
+		throws NoSuchOwnerException {
+
+		Owner owner = fetchByLastName_First(lastName, orderByComparator);
+
+		if (owner != null) {
+			return owner;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("lastName=");
+		sb.append(lastName);
+
+		sb.append("}");
+
+		throw new NoSuchOwnerException(sb.toString());
+	}
+
+	/**
+	 * Returns the first owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	@Override
+	public Owner fetchByLastName_First(
+		String lastName, OrderByComparator<Owner> orderByComparator) {
+
+		List<Owner> list = findByLastName(lastName, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner
+	 * @throws NoSuchOwnerException if a matching owner could not be found
+	 */
+	@Override
+	public Owner findByLastName_Last(
+			String lastName, OrderByComparator<Owner> orderByComparator)
+		throws NoSuchOwnerException {
+
+		Owner owner = fetchByLastName_Last(lastName, orderByComparator);
+
+		if (owner != null) {
+			return owner;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("lastName=");
+		sb.append(lastName);
+
+		sb.append("}");
+
+		throw new NoSuchOwnerException(sb.toString());
+	}
+
+	/**
+	 * Returns the last owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching owner, or <code>null</code> if a matching owner could not be found
+	 */
+	@Override
+	public Owner fetchByLastName_Last(
+		String lastName, OrderByComparator<Owner> orderByComparator) {
+
+		int count = countByLastName(lastName);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Owner> list = findByLastName(
+			lastName, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the owners before and after the current owner in the ordered set where lastName = &#63;.
+	 *
+	 * @param ownerId the primary key of the current owner
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next owner
+	 * @throws NoSuchOwnerException if a owner with the primary key could not be found
+	 */
+	@Override
+	public Owner[] findByLastName_PrevAndNext(
+			long ownerId, String lastName,
+			OrderByComparator<Owner> orderByComparator)
+		throws NoSuchOwnerException {
+
+		lastName = Objects.toString(lastName, "");
+
+		Owner owner = findByPrimaryKey(ownerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Owner[] array = new OwnerImpl[3];
+
+			array[0] = getByLastName_PrevAndNext(
+				session, owner, lastName, orderByComparator, true);
+
+			array[1] = owner;
+
+			array[2] = getByLastName_PrevAndNext(
+				session, owner, lastName, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Owner getByLastName_PrevAndNext(
+		Session session, Owner owner, String lastName,
+		OrderByComparator<Owner> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_OWNER_WHERE);
+
+		boolean bindLastName = false;
+
+		if (lastName.isEmpty()) {
+			sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_3);
+		}
+		else {
+			bindLastName = true;
+
+			sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(OwnerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		if (bindLastName) {
+			queryPos.add(lastName);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(owner)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<Owner> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the owners where lastName = &#63; from the database.
+	 *
+	 * @param lastName the last name
+	 */
+	@Override
+	public void removeByLastName(String lastName) {
+		for (Owner owner :
+				findByLastName(
+					lastName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(owner);
+		}
+	}
+
+	/**
+	 * Returns the number of owners where lastName = &#63;.
+	 *
+	 * @param lastName the last name
+	 * @return the number of matching owners
+	 */
+	@Override
+	public int countByLastName(String lastName) {
+		lastName = Objects.toString(lastName, "");
+
+		FinderPath finderPath = _finderPathCountByLastName;
+
+		Object[] finderArgs = new Object[] {lastName};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OWNER_WHERE);
+
+			boolean bindLastName = false;
+
+			if (lastName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_3);
+			}
+			else {
+				bindLastName = true;
+
+				sb.append(_FINDER_COLUMN_LASTNAME_LASTNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindLastName) {
+					queryPos.add(lastName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LASTNAME_LASTNAME_2 =
+		"owner.lastName = ?";
+
+	private static final String _FINDER_COLUMN_LASTNAME_LASTNAME_3 =
+		"(owner.lastName IS NULL OR owner.lastName = '')";
 
 	public OwnerPersistenceImpl() {
 		setModelClass(Owner.class);
@@ -269,6 +803,24 @@ public class OwnerPersistenceImpl
 	public Owner updateImpl(Owner owner) {
 		boolean isNew = owner.isNew();
 
+		if (!(owner instanceof OwnerModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(owner.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(owner);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in owner proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom Owner implementation " +
+					owner.getClass());
+		}
+
+		OwnerModelImpl ownerModelImpl = (OwnerModelImpl)owner;
+
 		Session session = null;
 
 		try {
@@ -288,7 +840,7 @@ public class OwnerPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(OwnerImpl.class, owner, false, true);
+		entityCache.putResult(OwnerImpl.class, ownerModelImpl, false, true);
 
 		if (isNew) {
 			owner.setNew(false);
@@ -573,6 +1125,24 @@ public class OwnerPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathWithPaginationFindByLastName = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLastName",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"lastName"}, true);
+
+		_finderPathWithoutPaginationFindByLastName = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLastName",
+			new String[] {String.class.getName()}, new String[] {"lastName"},
+			true);
+
+		_finderPathCountByLastName = _createFinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLastName",
+			new String[] {String.class.getName()}, new String[] {"lastName"},
+			false);
+
 		OwnerUtil.setPersistence(this);
 	}
 
@@ -628,13 +1198,22 @@ public class OwnerPersistenceImpl
 	private static final String _SQL_SELECT_OWNER =
 		"SELECT owner FROM Owner owner";
 
+	private static final String _SQL_SELECT_OWNER_WHERE =
+		"SELECT owner FROM Owner owner WHERE ";
+
 	private static final String _SQL_COUNT_OWNER =
 		"SELECT COUNT(owner) FROM Owner owner";
+
+	private static final String _SQL_COUNT_OWNER_WHERE =
+		"SELECT COUNT(owner) FROM Owner owner WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "owner.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No Owner exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No Owner exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OwnerPersistenceImpl.class);
