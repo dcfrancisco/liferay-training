@@ -226,6 +226,10 @@ public class OwnerLocalServiceUtil {
 		return getService().getOwnerByLastName();
 	}
 
+	public static List<Owner> getOwnerByLastName(String lastName) {
+		return getService().getOwnerByLastName(lastName);
+	}
+
 	/**
 	 * Returns a range of all the owners.
 	 *

@@ -19,7 +19,13 @@ liferay-training
     │   ├── gradebook
     │   │   ├── Gradebook-api 
     │   │   └── Gradebook-service 
-    │   └── gradebook-web
+    │   ├── gradebook-web
+    │   │
+    │   └── petclinic
+    │       ├── petclinic-api 
+    │       ├── petclinic-service 
+    │       ├── owner-web 
+    │       └── vet-web
     └── themes
         └── livingstone-fjord-theme
 ```
