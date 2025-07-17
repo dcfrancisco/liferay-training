@@ -1,3 +1,14 @@
+# Clarity Training – Liferay 7.4.3.132 📘
+
+> ⚙️ Currently using: **Liferay CE 7.4.3.132-ga132**
+
+This branch contains my hands-on progress from Liferay’s new **Clarity training** program, based on a fictional company named *Clarity*.
+
+Modules and examples here are based on the official course, customized with my own additions and notes.
+
+> ☕️ If this helps you learn faster, [buy me a coffee](https://www.buymeacoffee.com/dcfrancisco) 🙌
+
+
 ## 🚀 Quick Start
 
 ### 🧰 Requirements
