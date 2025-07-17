@@ -124,17 +124,3 @@ If you’ve found this repo useful or it saved you time, consider [buying me a c
 
 Reach out via GitHub or connect on [LinkedIn](https://www.linkedin.com/in/dannyfrancisco/) (if applicable).
 
-```
-
----
-
-### ✅ Summary of Improvements:
-| Section | Enhancement |
-|--------|-------------|
-| **Header & Intro** | Added emoji, purpose, and link to support. |
-| **Folder Structure** | Explained each folder for better understanding. |
-| **Environment Setup** | Used collapsible sections for clarity and focus. |
-| **Support Section** | Clear, friendly CTA with link. |
-| **Markdown Styling** | Used emojis, quotes, and formatting for a more engaging read. |
-
-```
