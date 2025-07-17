@@ -25,3 +25,11 @@
 /plugins-sdk/dist
 /plugins-sdk/lib
 test-results
+
+## MacOS specific
+
+.DS_Store
+*.log
+*.swp
+*.swo
+*.bak
