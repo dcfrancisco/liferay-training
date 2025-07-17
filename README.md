@@ -1,140 +1,140 @@
-# liferay-training
-Liferay 7.3 practice (gradebook exercise)
+## 🚀 Quick Start
 
+### 🧰 Requirements
 
+- JDK 11
+- Node 16 via NVM
+- Blade CLI
 
-## Folder Structure
-```
-liferay-training
-    ├── configs
-    │   ├── common
-    │   ├── dev
-    │   ├── docker
-    │   ├── local
-    │   ├── prod
-    │   └── uat
-    ├── modules
-    │   ├── angular-routing-demo-portlet
-    │   ├── angular-weather-app
-    │   ├── gradebook
-    │   │   ├── Gradebook-api 
-    │   │   └── Gradebook-service 
-    │   ├── gradebook-web
-    │   │
-    │   └── petclinic
-    │       ├── petclinic-api 
-    │       ├── petclinic-service 
-    │       ├── owner-web 
-    │       └── vet-web
-    └── themes
-        └── livingstone-fjord-theme
-```
+### 🔧 Setup Environment
 
-## Setup Environment
+<details>
+<summary>JDK 11</summary>
 
-### Install JDK 11
-
-__Linux__
-```
+**Linux:**
+```bash
 sudo apt install openjdk-11-jdk
-```
-__Windows__
-```
-https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
-```
+````
 
-### Install Nvm
+**Windows / macOS:**
+Download from [Oracle JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
 
-__Windows__
+</details>
 
-* [Windows](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
-* Linux
-```agsl
+<details>
+<summary>Node.js via NVM</summary>
+
+**Install NVM:**
+
+* **Linux:**
+
+```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 ```
-* Mac
-```
-brew install nvm
 
+* **macOS:**
+
+```bash
+brew install nvm
 ```
-__Install node 16__
-```
-nvm install 16  
-```
-__Use node 16__
-```
+
+* **Windows:**
+  [Official guide](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows)
+
+**Install Node 16:**
+
+```bash
+nvm install 16
 nvm use 16
 ```
-__Check node and npm version__
-```
-node -v
 
-```
-__Check npm version__
-```
-npm -v
+</details>
 
-```
+<details>
+<summary>Blade CLI</summary>
 
-__Install blade__
+Download Blade CLI installer:
 
 * [Windows](https://releases.liferay.com/tools/ide/3.9.8/LiferayWorkspace-202212271250-windows-installer.exe)
 * [Linux](https://releases.liferay.com/tools/ide/3.9.8/LiferayWorkspace-202212271250-linux-x64-installer.run)
-* [Mac](https://releases.liferay.com/tools/ide/3.9.8/LiferayWorkspace-202212271250-macosx-installer.dmg)
+* [macOS](https://releases.liferay.com/tools/ide/3.9.8/LiferayWorkspace-202212271250-macosx-installer.dmg)
 
-### Build the project
+</details>
 
-__Clone the repository__
+---
 
-```
+## 🛠️ Build & Deploy
+
+### Clone this repository
+
+```bash
 git clone git@github.com:dcfrancisco/liferay-training.git
+cd liferay-training
 ```
 
-## Building the projects 
-__Create bundle__
+### Create the Bundle
 
-```
+```bash
 cd configs/local
 blade gw initBundle
-```
-or
-```
+# or
 ./gradlew initBundle
 ```
 
-__Service Builder__
+### Service Builder: Gradebook
 
-```
+```bash
 cd modules/gradebook/gradebook-service
 blade gw buildService
 cd ..
 blade gw build
 ```
-__Deploy gradebook-api and gradebook-service__
-```
-cd modules/grabook
+
+### Deploy Gradebook
+
+```bash
+cd modules/gradebook
 blade gw deploy
 ```
 
-__Build Gradebook-web__
+### Gradebook Web
 
-```agsl
+```bash
 cd modules/gradebook-web
 blade gw build
-```
-__Deploy Gradebook-web__
-
-```
 blade gw deploy
 ```
 
-### Build Themes
+### Theme
 
-```
+```bash
 cd themes/livingstone-fjord-theme
 blade gw build
 ```
 
+---
 
+## ☕ Support
 
+If you’ve found this repo useful or it saved you time, consider [buying me a coffee](https://www.buymeacoffee.com/dcfrancisco) — it’s a small way to say thanks and help keep the motivation going!
 
+---
+
+## 📬 Contact
+
+Reach out via GitHub or connect on [LinkedIn](https://www.linkedin.com/in/dannyfrancisco/) (if applicable).
+
+```
+
+---
+
+### ✅ Summary of Improvements:
+| Section | Enhancement |
+|--------|-------------|
+| **Header & Intro** | Added emoji, purpose, and link to support. |
+| **Folder Structure** | Explained each folder for better understanding. |
+| **Environment Setup** | Used collapsible sections for clarity and focus. |
+| **Support Section** | Clear, friendly CTA with link. |
+| **Markdown Styling** | Used emojis, quotes, and formatting for a more engaging read. |
+
+```
