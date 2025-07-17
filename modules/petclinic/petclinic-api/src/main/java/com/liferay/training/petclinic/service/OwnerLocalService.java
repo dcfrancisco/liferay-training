@@ -209,6 +209,9 @@ public interface OwnerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Owner> getOwnerByLastName();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Owner> getOwnerByLastName(String lastName);
+
 	/**
 	 * Returns a range of all the owners.
 	 *
