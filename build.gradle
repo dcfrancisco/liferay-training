@@ -1,5 +1,5 @@
 // Check GETTING_STARTED.markdown for information regarding usage.
 node {
-    nodeVersion = "10.15.3"
-    npmVersion = "6.4.1"
+    nodeVersion = "16.13.0"
+    npmVersion = "8.1.0"
 }
