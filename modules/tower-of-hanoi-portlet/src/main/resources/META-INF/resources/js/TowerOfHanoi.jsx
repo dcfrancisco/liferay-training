@@ -24,76 +24,9 @@ function TowerOfHanoi() {
     if (n > 13) n = 13;
     setNumDisks(n);
     setPegs(initializePegs(n));
-    <div
-      style={{
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "50%",
-                  width: 6,
-                  height: "100%",
-                  background: "#888",
-                  transform: "translateX(-50%)",
-                  zIndex: 1,
-                }}
-              />
-              {/* Disks in front */}
-              {peg.map((disk, j) => (
-                <div
-                  key={j}
-                  style={{
-                    width: 20 + disk * 20,
-                    height: 20,
-                    background: "#1976d2",
-                    margin: "2px auto",
-                    borderRadius: 4,
-                    color: "white",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    lineHeight: "20px",
-                    transition: "all 0.3s",
-                    zIndex: 2,
-                    position: 'relative',
-                  }}
-                >
-                  {disk}
-                </div>
-              ))}
-            margin: "2px auto",
-            borderRadius: 4,
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center",
-            lineHeight: "20px",
-            transition: "all 0.3s",
-            zIndex: 1,
-            position: "relative",
-          }}
-        >
-          {disk}
-        </div>
-      ))}
-    </div>;
-    // Animate moves
-    let currentPegs = [Array.from({ length: N }, (_, i) => N - i), [], []];
-    setPegs(currentPegs.map((peg) => [...peg]));
     setMoveCount(0);
-    let idx = 0;
-    function animate() {
-      if (idx >= moveList.length) {
-        setSolving(false);
-        return;
-      }
-      const { disk, from, to } = moveList[idx];
-      currentPegs[from].pop();
-      currentPegs[to].push(disk);
-      setPegs(currentPegs.map((peg) => [...peg]));
-      setMoveCount(idx + 1);
-      idx++;
-      animationRef.current = setTimeout(animate, 350);
-    }
-    animate();
+    setSolving(false);
+    if (animationRef.current) clearTimeout(animationRef.current);
   };
 
   return (
