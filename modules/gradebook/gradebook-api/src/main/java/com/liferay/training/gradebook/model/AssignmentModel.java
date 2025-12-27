@@ -239,4 +239,11 @@ public interface AssignmentModel
 	 */
 	public void setDueDate(Date dueDate);
 
+	@Override
+	public Assignment cloneWithOriginalValues();
+
+	public default String toXmlString() {
+		return null;
+	}
+
 }

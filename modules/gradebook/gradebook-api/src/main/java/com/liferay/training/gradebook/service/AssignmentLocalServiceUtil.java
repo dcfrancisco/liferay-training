@@ -5,9 +5,11 @@
 
 package com.liferay.training.gradebook.service;
 
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.training.gradebook.model.Assignment;
 
@@ -118,6 +120,14 @@ public class AssignmentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static <T> T dslQuery(DSLQuery dslQuery) {
+		return getService().dslQuery(dslQuery);
+	}
+
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
 	}
 
 	public static DynamicQuery dynamicQuery() {
@@ -393,13 +403,11 @@ public class AssignmentLocalServiceUtil {
 	}
 
 	public static AssignmentLocalService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AssignmentLocalService service) {
-		_service = service;
-	}
-
-	private static volatile AssignmentLocalService _service;
+	private static final Snapshot<AssignmentLocalService> _serviceSnapshot =
+		new Snapshot<>(
+			AssignmentLocalServiceUtil.class, AssignmentLocalService.class);
 
 }

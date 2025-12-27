@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.service.AssignmentService;
-import com.liferay.training.gradebook.service.AssignmentServiceUtil;
 import com.liferay.training.gradebook.service.persistence.AssignmentPersistence;
 
 import javax.sql.DataSource;
@@ -44,11 +43,10 @@ public abstract class AssignmentServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssignmentService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssignmentServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssignmentService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.training.gradebook.service.AssignmentServiceUtil</code>.
 	 */
 	@Deactivate
 	protected void deactivate() {
-		AssignmentServiceUtil.setService(null);
 	}
 
 	@Override
@@ -61,8 +59,6 @@ public abstract class AssignmentServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assignmentService = (AssignmentService)aopProxy;
-
-		AssignmentServiceUtil.setService(assignmentService);
 	}
 
 	/**
@@ -145,25 +141,6 @@ public abstract class AssignmentServiceBaseImpl
 
 	@Reference
 	protected com.liferay.portal.kernel.service.UserService userService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetEntryLocalService
-		assetEntryLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetEntryService
-		assetEntryService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetLinkLocalService
-		assetLinkLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetTagLocalService
-		assetTagLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetTagService assetTagService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssignmentServiceBaseImpl.class);

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.model.AssignmentModel;
-import com.liferay.training.gradebook.model.AssignmentSoap;
 
 import java.io.Serializable;
 
@@ -33,12 +32,10 @@ import java.lang.reflect.InvocationHandler;
 import java.sql.Blob;
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -148,58 +145,6 @@ public class AssignmentModelImpl
 	public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
 	}
 
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Assignment toModel(AssignmentSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		Assignment model = new AssignmentImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setAssignmentId(soapModel.getAssignmentId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setTitle(soapModel.getTitle());
-		model.setDescription(soapModel.getDescription());
-		model.setDueDate(soapModel.getDueDate());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static List<Assignment> toModels(AssignmentSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<Assignment> models = new ArrayList<Assignment>(soapModels.length);
-
-		for (AssignmentSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public AssignmentModelImpl() {
 	}
 
@@ -275,78 +220,90 @@ public class AssignmentModelImpl
 	public Map<String, Function<Assignment, Object>>
 		getAttributeGetterFunctions() {
 
-		return _attributeGetterFunctions;
+		return AttributeGetterFunctionsHolder._attributeGetterFunctions;
 	}
 
 	public Map<String, BiConsumer<Assignment, Object>>
 		getAttributeSetterBiConsumers() {
 
-		return _attributeSetterBiConsumers;
+		return AttributeSetterBiConsumersHolder._attributeSetterBiConsumers;
 	}
 
-	private static final Map<String, Function<Assignment, Object>>
-		_attributeGetterFunctions;
+	private static class AttributeGetterFunctionsHolder {
 
-	static {
-		Map<String, Function<Assignment, Object>> attributeGetterFunctions =
-			new LinkedHashMap<String, Function<Assignment, Object>>();
+		private static final Map<String, Function<Assignment, Object>>
+			_attributeGetterFunctions;
 
-		attributeGetterFunctions.put("uuid", Assignment::getUuid);
-		attributeGetterFunctions.put(
-			"assignmentId", Assignment::getAssignmentId);
-		attributeGetterFunctions.put("groupId", Assignment::getGroupId);
-		attributeGetterFunctions.put("companyId", Assignment::getCompanyId);
-		attributeGetterFunctions.put("userId", Assignment::getUserId);
-		attributeGetterFunctions.put("userName", Assignment::getUserName);
-		attributeGetterFunctions.put("createDate", Assignment::getCreateDate);
-		attributeGetterFunctions.put(
-			"modifiedDate", Assignment::getModifiedDate);
-		attributeGetterFunctions.put("title", Assignment::getTitle);
-		attributeGetterFunctions.put("description", Assignment::getDescription);
-		attributeGetterFunctions.put("dueDate", Assignment::getDueDate);
+		static {
+			Map<String, Function<Assignment, Object>> attributeGetterFunctions =
+				new LinkedHashMap<String, Function<Assignment, Object>>();
 
-		_attributeGetterFunctions = Collections.unmodifiableMap(
-			attributeGetterFunctions);
+			attributeGetterFunctions.put("uuid", Assignment::getUuid);
+			attributeGetterFunctions.put(
+				"assignmentId", Assignment::getAssignmentId);
+			attributeGetterFunctions.put("groupId", Assignment::getGroupId);
+			attributeGetterFunctions.put("companyId", Assignment::getCompanyId);
+			attributeGetterFunctions.put("userId", Assignment::getUserId);
+			attributeGetterFunctions.put("userName", Assignment::getUserName);
+			attributeGetterFunctions.put(
+				"createDate", Assignment::getCreateDate);
+			attributeGetterFunctions.put(
+				"modifiedDate", Assignment::getModifiedDate);
+			attributeGetterFunctions.put("title", Assignment::getTitle);
+			attributeGetterFunctions.put(
+				"description", Assignment::getDescription);
+			attributeGetterFunctions.put("dueDate", Assignment::getDueDate);
+
+			_attributeGetterFunctions = Collections.unmodifiableMap(
+				attributeGetterFunctions);
+		}
+
 	}
 
-	private static final Map<String, BiConsumer<Assignment, Object>>
-		_attributeSetterBiConsumers;
+	private static class AttributeSetterBiConsumersHolder {
 
-	static {
-		Map<String, BiConsumer<Assignment, ?>> attributeSetterBiConsumers =
-			new LinkedHashMap<String, BiConsumer<Assignment, ?>>();
+		private static final Map<String, BiConsumer<Assignment, Object>>
+			_attributeSetterBiConsumers;
 
-		attributeSetterBiConsumers.put(
-			"uuid", (BiConsumer<Assignment, String>)Assignment::setUuid);
-		attributeSetterBiConsumers.put(
-			"assignmentId",
-			(BiConsumer<Assignment, Long>)Assignment::setAssignmentId);
-		attributeSetterBiConsumers.put(
-			"groupId", (BiConsumer<Assignment, Long>)Assignment::setGroupId);
-		attributeSetterBiConsumers.put(
-			"companyId",
-			(BiConsumer<Assignment, Long>)Assignment::setCompanyId);
-		attributeSetterBiConsumers.put(
-			"userId", (BiConsumer<Assignment, Long>)Assignment::setUserId);
-		attributeSetterBiConsumers.put(
-			"userName",
-			(BiConsumer<Assignment, String>)Assignment::setUserName);
-		attributeSetterBiConsumers.put(
-			"createDate",
-			(BiConsumer<Assignment, Date>)Assignment::setCreateDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Assignment, Date>)Assignment::setModifiedDate);
-		attributeSetterBiConsumers.put(
-			"title", (BiConsumer<Assignment, String>)Assignment::setTitle);
-		attributeSetterBiConsumers.put(
-			"description",
-			(BiConsumer<Assignment, String>)Assignment::setDescription);
-		attributeSetterBiConsumers.put(
-			"dueDate", (BiConsumer<Assignment, Date>)Assignment::setDueDate);
+		static {
+			Map<String, BiConsumer<Assignment, ?>> attributeSetterBiConsumers =
+				new LinkedHashMap<String, BiConsumer<Assignment, ?>>();
 
-		_attributeSetterBiConsumers = Collections.unmodifiableMap(
-			(Map)attributeSetterBiConsumers);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<Assignment, String>)Assignment::setUuid);
+			attributeSetterBiConsumers.put(
+				"assignmentId",
+				(BiConsumer<Assignment, Long>)Assignment::setAssignmentId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<Assignment, Long>)Assignment::setGroupId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<Assignment, Long>)Assignment::setCompanyId);
+			attributeSetterBiConsumers.put(
+				"userId", (BiConsumer<Assignment, Long>)Assignment::setUserId);
+			attributeSetterBiConsumers.put(
+				"userName",
+				(BiConsumer<Assignment, String>)Assignment::setUserName);
+			attributeSetterBiConsumers.put(
+				"createDate",
+				(BiConsumer<Assignment, Date>)Assignment::setCreateDate);
+			attributeSetterBiConsumers.put(
+				"modifiedDate",
+				(BiConsumer<Assignment, Date>)Assignment::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"title", (BiConsumer<Assignment, String>)Assignment::setTitle);
+			attributeSetterBiConsumers.put(
+				"description",
+				(BiConsumer<Assignment, String>)Assignment::setDescription);
+			attributeSetterBiConsumers.put(
+				"dueDate",
+				(BiConsumer<Assignment, Date>)Assignment::setDueDate);
+
+			_attributeSetterBiConsumers = Collections.unmodifiableMap(
+				(Map)attributeSetterBiConsumers);
+		}
+
 	}
 
 	@JSON
@@ -664,6 +621,31 @@ public class AssignmentModelImpl
 	}
 
 	@Override
+	public Assignment cloneWithOriginalValues() {
+		AssignmentImpl assignmentImpl = new AssignmentImpl();
+
+		assignmentImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		assignmentImpl.setAssignmentId(
+			this.<Long>getColumnOriginalValue("assignmentId"));
+		assignmentImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
+		assignmentImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		assignmentImpl.setUserId(this.<Long>getColumnOriginalValue("userId"));
+		assignmentImpl.setUserName(
+			this.<String>getColumnOriginalValue("userName"));
+		assignmentImpl.setCreateDate(
+			this.<Date>getColumnOriginalValue("createDate"));
+		assignmentImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
+		assignmentImpl.setTitle(this.<String>getColumnOriginalValue("title"));
+		assignmentImpl.setDescription(
+			this.<String>getColumnOriginalValue("description"));
+		assignmentImpl.setDueDate(this.<Date>getColumnOriginalValue("dueDate"));
+
+		return assignmentImpl;
+	}
+
+	@Override
 	public int compareTo(Assignment assignment) {
 		int value = 0;
 
@@ -853,37 +835,6 @@ public class AssignmentModelImpl
 		return sb.toString();
 	}
 
-	@Override
-	public String toXmlString() {
-		Map<String, Function<Assignment, Object>> attributeGetterFunctions =
-			getAttributeGetterFunctions();
-
-		StringBundler sb = new StringBundler(
-			(5 * attributeGetterFunctions.size()) + 4);
-
-		sb.append("<model><model-name>");
-		sb.append(getModelClassName());
-		sb.append("</model-name>");
-
-		for (Map.Entry<String, Function<Assignment, Object>> entry :
-				attributeGetterFunctions.entrySet()) {
-
-			String attributeName = entry.getKey();
-			Function<Assignment, Object> attributeGetterFunction =
-				entry.getValue();
-
-			sb.append("<column><column-name>");
-			sb.append(attributeName);
-			sb.append("</column-name><column-value><![CDATA[");
-			sb.append(attributeGetterFunction.apply((Assignment)this));
-			sb.append("]]></column-value></column>");
-		}
-
-		sb.append("</model>");
-
-		return sb.toString();
-	}
-
 	private static class EscapedModelProxyProviderFunctionHolder {
 
 		private static final Function<InvocationHandler, Assignment>
@@ -909,8 +860,9 @@ public class AssignmentModelImpl
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
 
-		Function<Assignment, Object> function = _attributeGetterFunctions.get(
-			columnName);
+		Function<Assignment, Object> function =
+			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
+				columnName);
 
 		if (function == null) {
 			throw new IllegalArgumentException(

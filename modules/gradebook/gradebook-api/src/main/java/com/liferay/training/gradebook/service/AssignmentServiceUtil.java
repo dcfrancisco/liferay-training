@@ -6,6 +6,7 @@
 package com.liferay.training.gradebook.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.training.gradebook.model.Assignment;
 
@@ -90,13 +91,10 @@ public class AssignmentServiceUtil {
 	}
 
 	public static AssignmentService getService() {
-		return _service;
+		return _serviceSnapshot.get();
 	}
 
-	public static void setService(AssignmentService service) {
-		_service = service;
-	}
-
-	private static volatile AssignmentService _service;
+	private static final Snapshot<AssignmentService> _serviceSnapshot =
+		new Snapshot<>(AssignmentServiceUtil.class, AssignmentService.class);
 
 }

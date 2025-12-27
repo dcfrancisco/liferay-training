@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.training.gradebook.model.Assignment;
 import com.liferay.training.gradebook.service.AssignmentLocalService;
-import com.liferay.training.gradebook.service.AssignmentLocalServiceUtil;
 import com.liferay.training.gradebook.service.persistence.AssignmentPersistence;
 
 import java.io.Serializable;
@@ -68,7 +68,7 @@ public abstract class AssignmentLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Use <code>AssignmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>AssignmentLocalServiceUtil</code>.
+	 * Never modify or reference this class directly. Use <code>AssignmentLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.training.gradebook.service.AssignmentLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -134,6 +134,18 @@ public abstract class AssignmentLocalServiceBaseImpl
 	@Override
 	public Assignment deleteAssignment(Assignment assignment) {
 		return assignmentPersistence.remove(assignment);
+	}
+
+	@Override
+	public <T> T dslQuery(DSLQuery dslQuery) {
+		return assignmentPersistence.dslQuery(dslQuery);
+	}
+
+	@Override
+	public int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
 	}
 
 	@Override
@@ -365,6 +377,7 @@ public abstract class AssignmentLocalServiceBaseImpl
 	/**
 	 * @throws PortalException
 	 */
+	@Override
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
@@ -378,10 +391,16 @@ public abstract class AssignmentLocalServiceBaseImpl
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
 
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Implement AssignmentLocalServiceImpl#deleteAssignment(Assignment) to avoid orphaned data");
+		}
+
 		return assignmentLocalService.deleteAssignment(
 			(Assignment)persistedModel);
 	}
 
+	@Override
 	public BasePersistence<Assignment> getBasePersistence() {
 		return assignmentPersistence;
 	}
@@ -488,7 +507,6 @@ public abstract class AssignmentLocalServiceBaseImpl
 
 	@Deactivate
 	protected void deactivate() {
-		AssignmentLocalServiceUtil.setService(null);
 	}
 
 	@Override
@@ -502,8 +520,6 @@ public abstract class AssignmentLocalServiceBaseImpl
 	@Override
 	public void setAopProxy(Object aopProxy) {
 		assignmentLocalService = (AssignmentLocalService)aopProxy;
-
-		AssignmentLocalServiceUtil.setService(assignmentLocalService);
 	}
 
 	/**
@@ -572,18 +588,6 @@ public abstract class AssignmentLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetEntryLocalService
-		assetEntryLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetLinkLocalService
-		assetLinkLocalService;
-
-	@Reference
-	protected com.liferay.asset.kernel.service.AssetTagLocalService
-		assetTagLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssignmentLocalServiceBaseImpl.class);
