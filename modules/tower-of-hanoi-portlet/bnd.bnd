@@ -1,0 +1,8 @@
+Bundle-Name: tower-of-hanoi-portlet
+Bundle-SymbolicName: tower.of.hanoi.portlet
+Bundle-Version: 1.0.0
+Export-Package: tower.of.hanoi.portlet.constants
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /tower-of-hanoi-portlet
