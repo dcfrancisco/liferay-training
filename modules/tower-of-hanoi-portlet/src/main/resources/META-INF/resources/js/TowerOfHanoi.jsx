@@ -24,62 +24,57 @@ function TowerOfHanoi() {
     if (n > 13) n = 13;
     setNumDisks(n);
     setPegs(initializePegs(n));
-            <div
-              style={{
-                height: 200,
-                border: "1px solid #ccc",
-                marginBottom: 10,
-                position: "relative",
-                background: "#f9f9f9",
-                transition: "background 0.2s",
-                display: 'flex',
-                flexDirection: 'column-reverse',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Peg bar behind disks */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: "50%",
-                  width: 6,
-                  height: "100%",
-                  background: "#888",
-                  transform: "translateX(-50%)",
-                  zIndex: 0,
-                }}
-              />
-              {/* Disks in front */}
-              {peg.map((disk, j) => (
-                <div
-                  key={j}
-                  style={{
-                    width: 20 + disk * 20,
-                    height: 20,
-                    background: "#1976d2",
-                    margin: "2px auto",
-                    borderRadius: 4,
-                    color: "white",
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    lineHeight: "20px",
-                    transition: "all 0.3s",
-                    zIndex: 1,
-                    position: 'relative',
-                  }}
-                >
-                  {disk}
-                </div>
-              ))}
-            </div>
-      }
-      const disk = P[from].pop();
-      P[to].push(disk);
-      moveList.push({ disk, from, to });
-    }
+    <div
+      style={{
+        height: 200,
+        border: "1px solid #ccc",
+        marginBottom: 10,
+        position: "relative",
+        background: "#f9f9f9",
+        transition: "background 0.2s",
+        display: "flex",
+        flexDirection: "column-reverse",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        overflow: "hidden",
+      }}
+    >
+      {/* Peg bar behind disks */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: "50%",
+          width: 6,
+          height: "100%",
+          background: "#888",
+          transform: "translateX(-50%)",
+          zIndex: 0,
+        }}
+      />
+      {/* Disks in front */}
+      {peg.map((disk, j) => (
+        <div
+          key={j}
+          style={{
+            width: 20 + disk * 20,
+            height: 20,
+            background: "#1976d2",
+            margin: "2px auto",
+            borderRadius: 4,
+            color: "white",
+            fontWeight: "bold",
+            textAlign: "center",
+            lineHeight: "20px",
+            transition: "all 0.3s",
+            zIndex: 1,
+            position: "relative",
+          }}
+        >
+          {disk}
+        </div>
+      ))}
+    </div>;
     // Animate moves
     let currentPegs = [Array.from({ length: N }, (_, i) => N - i), [], []];
     setPegs(currentPegs.map((peg) => [...peg]));
