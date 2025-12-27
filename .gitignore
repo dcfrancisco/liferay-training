@@ -33,3 +33,5 @@ test-results
 *.swp
 *.swo
 *.bak
+
+.vscode/
