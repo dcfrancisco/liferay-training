@@ -12,6 +12,72 @@ function getLegalMove(pegs, from, to) {
 }
 
 function TowerOfHanoi() {
+  // Iterative Hanoi algorithm (from hanoi.bas), but animate each move
+  const solveHanoi = () => {
+    setSolving(true);
+    const N = numDisks;
+    let M = 1;
+    for (let i = 1; i <= N; i++) M *= 2;
+    M -= 1;
+    let P = [Array.from({ length: N }, (_, i) => N - i), [], []];
+    let D = 2,
+      A = 1;
+    if (N % 2 === 0) {
+      D = 1;
+      A = 2;
+    }
+    let moveList = [];
+    for (let i = 1; i <= M; i++) {
+      let Q = i % 3;
+      let p1, p2;
+      if (Q === 1) {
+        p1 = 0;
+        p2 = D;
+      } else if (Q === 2) {
+        p1 = 0;
+        p2 = A;
+      } else {
+        p1 = A;
+        p2 = D;
+      }
+      let from, to;
+      if (P[p1].length === 0) {
+        from = p2;
+        to = p1;
+      } else if (P[p2].length === 0) {
+        from = p1;
+        to = p2;
+      } else if (P[p1][P[p1].length - 1] < P[p2][P[p2].length - 1]) {
+        from = p1;
+        to = p2;
+      } else {
+        from = p2;
+        to = p1;
+      }
+      const disk = P[from].pop();
+      P[to].push(disk);
+      moveList.push({ disk, from, to });
+    }
+    // Animate moves
+    let currentPegs = [Array.from({ length: N }, (_, i) => N - i), [], []];
+    setPegs(currentPegs.map((peg) => [...peg]));
+    setMoveCount(0);
+    let idx = 0;
+    function animate() {
+      if (idx >= moveList.length) {
+        setSolving(false);
+        return;
+      }
+      const { disk, from, to } = moveList[idx];
+      currentPegs[from].pop();
+      currentPegs[to].push(disk);
+      setPegs(currentPegs.map((peg) => [...peg]));
+      setMoveCount(idx + 1);
+      idx++;
+      animationRef.current = setTimeout(animate, 350);
+    }
+    animate();
+  };
   const [numDisks, setNumDisks] = useState(3);
   const [pegs, setPegs] = useState(() => initializePegs(3));
   const [moveCount, setMoveCount] = useState(0);
