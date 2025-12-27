@@ -3,6 +3,7 @@
     "workspaces": {
         "packages": [
             "modules/angular-weather-app",
+            "modules/tower-of-hanoi-portlet",
             "modules/angular-routing-demo-portlet",
             "themes/livingstone-fjord-theme"
         ]
