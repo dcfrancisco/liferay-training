@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Assigments management toolbar display context.

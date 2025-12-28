@@ -10,9 +10,9 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
 	compileOnly group: "javax.portlet", name: "portlet-api"
-	// compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "4.0.4"
+	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "4.0.4"
 	// https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api
-	compileOnly("jakarta.servlet:jakarta.servlet-api:4.0.4")
+	//compileOnly("jakarta.servlet:jakarta.servlet-api:4.0.4")
 
 	compileOnly group: "jstl", name: "jstl"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
